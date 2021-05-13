@@ -99,18 +99,31 @@ Run simulation tests
 
    cd <your_e203_dir>/vsim
    
+   make clean
+
    make install
         
-   make compile 
+   // For VCS:
+   make compile SIM=vcs
+
+   // For iVerilog:
+   make compile SIM=iverilog 
 
 .. note::
-   Since VCS tool is used in e230_hbirdv2 makefile as default, so make sure that VCS tool is installed in your machine before running simulation test. 
+   1. Here we use iVerilog+GTKWave for simulation by default, and VCS+Verdi are also supported in simulation environment, you can choose the simulation tool by Makefile variable **SIM**. If you want to run simulation tests directly, please make sure these EDA tools are installed in your working environment. 
+
+   2. If you use iVerilog as simulation tool, please make sure the tool verison is 12.0.
+
 
 **2. Run default testcase**
 
 .. code-block:: shell
+   
+   // For VCS:
+   make run_test SIM=vcs
 
-   make run_test
+   // For iVerilog:
+   make run_test SIM=iverilog 
 
 .. _figure_sim_2:
 
@@ -120,15 +133,51 @@ Run simulation tests
 
    Default test simulation result
 
-
-**3. Run regression**
+**3. Show waveform**
 
 .. code-block:: shell
 
-   make regress_run
+   // Using Verdi:
+   make wave SIM=vcs
+
+   // Using GTKWave:
+   make wave SIM=iverilog 
+
+.. note::
+   The combination of simulation tool and waveform viewer is fixed in Makefile.
+
+   - VCS + Verdi
+   - iVerilog + GTKWave
+
+.. _figure_sim_3:
+
+.. figure:: /asserts/medias/sim_fig3.JPG
+   :width: 800
+   :alt: sim_fig3
+
+   Waveform with Verdi 
+
+.. _figure_sim_4:
+
+.. figure:: /asserts/medias/sim_fig4.JPG
+   :width: 800
+   :alt: sim_fig4
+
+   Waveform with GTKWave
 
 
-**4. Check regression result**
+**4. Run regression**
+
+.. code-block:: shell
+
+   // For VCS:
+   make regress_run SIM=vcs
+
+   // For iVerilog:
+   make regress_run SIM=iverilog 
+
+
+**5. Check regression result**
 
 .. code-block:: shell
 
@@ -136,11 +185,11 @@ Run simulation tests
 
 Regression result is printed as shown in the figure below.
 
-.. _figure_sim_3:
+.. _figure_sim_5:
 
-.. figure:: /asserts/medias/sim_fig3.png
+.. figure:: /asserts/medias/sim_fig5.png
    :width: 800
-   :alt: sim_fig3
+   :alt: sim_fig5
 
    Regression result
 
